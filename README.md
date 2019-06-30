@@ -1,2 +1,3 @@
-#Flappy Deadpool
-A basic Java game
+# Flappy Deadpool
+
+A basic flappybird-like Java game.
