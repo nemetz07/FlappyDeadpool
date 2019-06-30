@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE preferences SYSTEM "http://java.sun.com/dtd/preferences.dtd">
+<preferences EXTERNAL_XML_VERSION="1.0">
+  <root type="user">
+    <map/>
+    <node name="flappypool">
+      <map>
+        <entry key="Screen_Width" value="480"/>
+        <entry key="Screen_Height" value="640"/>
+        <entry key="Debug_mode" value="false"/>
+        <entry key="Difficulty" value="EASY"/>
+        <entry key="Level_speed" value="3.0"/>
+        <entry key="Gravity" value="0.4"/>
+        <entry key="Jump_strength" value="-8.0"/>
+        <entry key="PositionX" value="125"/>
+        <entry key="Starting_height" value="150"/>
+        <entry key="Player_model" value="deadpool.png"/>
+        <entry key="Rotation" value="true"/>
+      </map>
+    </node>
+  </root>
+</preferences>
