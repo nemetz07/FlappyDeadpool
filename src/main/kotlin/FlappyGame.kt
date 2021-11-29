@@ -45,7 +45,6 @@ class FlappyGame : GameApplication() {
             .at(100.0, getAppHeight() / 2.0)
             .collidable()
             .with(Player())
-            .with(DraggableComponent())
             .with(ProjectileComponent(Point2D(1.0, 0.0), 1.0))
             .buildAndAttach()
 
