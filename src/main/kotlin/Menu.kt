@@ -418,14 +418,14 @@ class Menu(type: MenuType) : FXGLMenu(type) {
                 }
             })
 
-            input.addEventFilter(MouseEvent.MOUSE_PRESSED, EventHandler { e ->
+            input.addEventFilter(MouseEvent.MOUSE_PRESSED) { e ->
                 val rebound = getInput().rebind(actionContext!!, e.button, InputModifier.from(e))
 
                 if (rebound) {
                     FXGL.getSceneService().popSubScene()
                     isActive = false
                 }
-            })
+            }
 
             val rect = Rectangle(250.0, 100.0)
             rect.stroke = Color.color(0.85, 0.9, 0.9, 0.95)
@@ -444,35 +444,6 @@ class Menu(type: MenuType) : FXGLMenu(type) {
         }
     }
 
-    private fun addNewInputBinding(action: UserAction, trigger: Trigger, grid: GridPane) {
-        val actionName = getUIFactoryService().newText(action.name, Color.WHITE, 18.0)
-
-        val triggerView = TriggerView(trigger)
-        triggerView.triggerProperty().bind(getInput().triggerProperty(action))
-
-        triggerView.setOnMouseClicked {
-            if (pressAnyKeyState.isActive)
-                return@setOnMouseClicked
-
-            pressAnyKeyState.isActive = true
-            pressAnyKeyState.actionContext = action
-            FXGL.getSceneService().pushSubScene(pressAnyKeyState)
-        }
-
-        val hBox = HBox()
-        hBox.prefWidth = 100.0
-        hBox.alignment = Pos.CENTER
-        hBox.children.add(triggerView)
-
-        var controlsRow = grid.userData as Int
-        grid.addRow(controlsRow++, actionName, hBox)
-        grid.userData = controlsRow
-    }
-
-    /**
-     * A generic vertical box container for menu content
-     * where each element is followed by a separator.
-     */
     class MenuContent(vararg items: Node) : VBox() {
 
         private var onOpen: Runnable? = null
@@ -502,24 +473,6 @@ class Menu(type: MenuType) : FXGLMenu(type) {
                     onClose()
                 }
             }
-        }
-
-        /**
-         * Set on open handler.
-         *
-         * @param onOpenAction method to be called when content opens
-         */
-        fun setOnOpen(onOpenAction: Runnable) {
-            this.onOpen = onOpenAction
-        }
-
-        /**
-         * Set on close handler.
-         *
-         * @param onCloseAction method to be called when content closes
-         */
-        fun setOnClose(onCloseAction: Runnable) {
-            this.onClose = onCloseAction
         }
 
         private fun onOpen() {

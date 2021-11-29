@@ -1,17 +1,19 @@
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
-import com.almasb.fxgl.dsl.FXGL
+import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.dsl.components.DraggableComponent
 import com.almasb.fxgl.dsl.components.OffscreenCleanComponent
 import com.almasb.fxgl.dsl.components.ProjectileComponent
-import com.almasb.fxgl.dsl.getAppHeight
-import com.almasb.fxgl.dsl.getDialogService
-import com.almasb.fxgl.dsl.getGameWorld
 import com.almasb.fxgl.entity.Entity
 import com.almasb.fxgl.input.UserAction
+import com.almasb.fxgl.ui.FontType
 import javafx.geometry.Orientation
 import javafx.geometry.Point2D
+import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
+import javafx.scene.paint.Color
+import javafx.scene.text.Text
+import java.awt.Font
 
 class FlappyGame : GameApplication() {
 
@@ -20,7 +22,6 @@ class FlappyGame : GameApplication() {
     lateinit var scoreManager: ScoreManager
     private lateinit var background: Entity
     private var pipeFrames = 76
-    private var currentScore = 0
     private var lastPipe = 0
 
     override fun onPreInit() {
@@ -30,8 +31,6 @@ class FlappyGame : GameApplication() {
 
     override fun initGame() {
         super.initGame()
-
-        currentScore = 0
 
         background = FXGL.entityBuilder()
             .view(ScrollingBackground(FXGL.image("background.png"), 3840.0, 800.0, Orientation.HORIZONTAL))
@@ -51,6 +50,19 @@ class FlappyGame : GameApplication() {
             .buildAndAttach()
 
         FXGL.getGameScene().viewport.bindToEntity(scroller, 0.0, 0.0)
+    }
+
+    override fun initGameVars(vars: MutableMap<String, Any>) {
+        vars["score"] = 0
+    }
+
+    override fun initUI() {
+        val textScore: Text = getUIFactoryService().newText("", Color.WHITE, FontType.UI, 36.0).also {
+            it.translateX = 10.0
+            it.translateY = 35.0
+            it.textProperty().bind(getWorldProperties().intProperty("score").asString())
+        }
+        getGameScene().addUINode(textScore)
     }
 
     override fun initSettings(settings: GameSettings) {
@@ -92,21 +104,30 @@ class FlappyGame : GameApplication() {
         }
         pipeFrames++
 
+        if (!player.isWithin(Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight().toDouble()))) {
+//            gameOver()
+        }
+
         getGameWorld().getEntitiesByComponent(Pipe::class.java).forEach {
-            if (it.position.x <= player.x && lastPipe != it.hashCode()){
-                currentScore++
+            if ((it.position.x + PipeConstants.PIPE_WIDTH) <= player.x && lastPipe != it.hashCode()) {
+                getWorldProperties().increment("score", 1)
+                println(getWorldProperties().getInt("score"))
                 lastPipe = it.hashCode()
             }
 
             if (it.isColliding(player)) {
-                getDialogService().showInputBox("Name:") { name ->
-                    scoreManager.addScore(name, currentScore)
-                    scoreManager.saveToFile()
-                    FXGL.getGameController().gotoMainMenu()
-                }
+//                gameOver()
             }
         }
 
         super.onUpdate(tpf)
+    }
+
+    private fun gameOver() {
+        getDialogService().showInputBox("Name:") { name ->
+            scoreManager.addScore(name, getWorldProperties().getInt("score"))
+            scoreManager.saveToFile()
+            FXGL.getGameController().gotoMainMenu()
+        }
     }
 }
