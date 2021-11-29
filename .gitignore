@@ -1,5 +1,6 @@
 /build
 /system
+/logs
 /.idea
 /.gradle
 scores.json
