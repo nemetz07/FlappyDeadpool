@@ -11,6 +11,7 @@ import javafx.util.Duration
 class Player : Component() {
     var isJumping = false
     private var speedY = 1.0
+    private var jumpFrame = 0
     private val texture: AnimatedTexture
     private val animIdle: AnimationChannel = AnimationChannel(
         FXGL.image("deadpool.png"),
@@ -37,8 +38,6 @@ class Player : Component() {
         entity.boundingBoxComponent.addHitBox(HitBox(Point2D(22.0, 5.0), BoundingShape.box(38.0, 56.0)))
         entity.setRotationOrigin(Point2D(39.0, 33.0))
     }
-
-    private var jumpFrame = 0
 
     override fun onUpdate(tpf: Double) {
         if (entity.position.y > getAppHeight()) {

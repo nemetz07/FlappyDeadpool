@@ -1,3 +1,4 @@
+import com.almasb.fxgl.app.ApplicationMode
 import com.almasb.fxgl.app.GameApplication
 import com.almasb.fxgl.app.GameSettings
 import com.almasb.fxgl.dsl.*
@@ -73,9 +74,7 @@ class FlappyGame : GameApplication() {
             version = "1.0"
             isMainMenuEnabled = true
             sceneFactory = CustomSceneFactory()
-            isDeveloperMenuEnabled = true
-//            applicationMode = ApplicationMode.RELEASE
-//            isProfilingEnabled = true
+            applicationMode = ApplicationMode.RELEASE
         }
     }
 
