@@ -1,4 +1,5 @@
-FlappyPool.iml
-/libs
+/build
+/system
 /.idea
-/out
+/.gradle
+scores.json

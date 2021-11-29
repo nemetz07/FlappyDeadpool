@@ -1,3 +1,3 @@
 # Flappy Deadpool
 
-A basic flappybird-like Java game.
+A basic flappybird-like Kotlin game.
