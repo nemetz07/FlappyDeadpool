@@ -13,7 +13,6 @@ import javafx.geometry.Rectangle2D
 import javafx.scene.input.KeyCode
 import javafx.scene.paint.Color
 import javafx.scene.text.Text
-import java.awt.Font
 
 class FlappyGame : GameApplication() {
 
@@ -105,18 +104,17 @@ class FlappyGame : GameApplication() {
         pipeFrames++
 
         if (!player.isWithin(Rectangle2D(0.0, 0.0, getAppWidth().toDouble(), getAppHeight().toDouble()))) {
-//            gameOver()
+            gameOver()
         }
 
         getGameWorld().getEntitiesByComponent(Pipe::class.java).forEach {
             if ((it.position.x + PipeConstants.PIPE_WIDTH) <= player.x && lastPipe != it.hashCode()) {
                 getWorldProperties().increment("score", 1)
-                println(getWorldProperties().getInt("score"))
                 lastPipe = it.hashCode()
             }
 
             if (it.isColliding(player)) {
-//                gameOver()
+                gameOver()
             }
         }
 

@@ -18,6 +18,7 @@ dialog.cancel = ABBRECHEN
 # Menu text (as translated by Zach)
 #
 
+menu.highscores = HIGHSCORES
 menu.language = SPRACHE
 menu.continue = FORTFAHREN
 menu.resume = FORTSETZEN

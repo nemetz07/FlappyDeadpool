@@ -18,6 +18,7 @@ dialog.cancel = ОТМЕНА
 # Menu text
 #
 
+menu.highscores = HIGHSCORES
 menu.language = ЯЗЫК
 menu.continue = ПРОДОЛЖИТЬ
 menu.resume = ВЕРНУТЬСЯ

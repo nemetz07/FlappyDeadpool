@@ -7,9 +7,7 @@ import com.almasb.fxgl.dsl.*
 import com.almasb.fxgl.gameplay.GameDifficulty
 import com.almasb.fxgl.input.Input
 import com.almasb.fxgl.input.InputModifier
-import com.almasb.fxgl.input.Trigger
 import com.almasb.fxgl.input.UserAction
-import com.almasb.fxgl.input.view.TriggerView
 import com.almasb.fxgl.logging.Logger
 import com.almasb.fxgl.particle.ParticleEmitters
 import com.almasb.fxgl.particle.ParticleSystem
@@ -28,12 +26,16 @@ import javafx.scene.effect.BlendMode
 import javafx.scene.effect.GaussianBlur
 import javafx.scene.input.KeyEvent
 import javafx.scene.input.MouseEvent
-import javafx.scene.layout.*
+import javafx.scene.layout.HBox
+import javafx.scene.layout.Pane
+import javafx.scene.layout.StackPane
+import javafx.scene.layout.VBox
 import javafx.scene.paint.*
 import javafx.scene.shape.Polygon
 import javafx.scene.shape.Rectangle
 import javafx.util.Duration
 import java.util.function.Supplier
+
 
 class Menu(type: MenuType) : FXGLMenu(type) {
     companion object {
@@ -196,9 +198,7 @@ class Menu(type: MenuType) : FXGLMenu(type) {
         }
 
         MenuButton("menu.highscores").also {
-            it.setOnAction {
-                println((getApp() as FlappyGame).scoreManager.scores)
-            }
+            it.setChild(createHighscoresMenu(it))
             box.add(it)
         }
 
@@ -213,6 +213,21 @@ class Menu(type: MenuType) : FXGLMenu(type) {
         }
 
         return box
+    }
+
+    private fun createHighscoresMenu(menuButton: Menu.MenuButton): MenuBox {
+        menuButton.setMenuContent({ createContentHighscores() })
+        return MenuBox(menuButton)
+    }
+
+    private fun createContentHighscores(): MenuContent {
+        val scoresLayout = VBox()
+        val scoreListView = ListView<Score>()
+        scoreListView.prefWidth = 400.0
+        scoreListView.items = (getApp() as FlappyGame).scoreManager.scores.sorted { o1, o2 ->  o2.score - o1.score}
+        scoresLayout.children.add(scoreListView)
+
+        return MenuContent(scoresLayout)
     }
 
     private fun createMenuBodyGameMenu(): MenuBox {
