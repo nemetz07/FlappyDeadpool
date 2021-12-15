@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flame/components.dart';
 import 'package:flame/geometry.dart';
@@ -20,12 +19,12 @@ class PipeComponent extends PositionComponent
   late double gapStartY;
   late double maxGapStartY;
 
-  final strokePaint = Paint()
+  static final strokePaint = Paint()
     ..color = const Color(0xFF000000)
     ..style = PaintingStyle.stroke
     ..strokeWidth = 2;
 
-  final fillPaint = Paint()
+  static final fillPaint = Paint()
     ..shader = const LinearGradient(
       colors: [
         Color.fromARGB(255, 160, 0, 0),
@@ -48,9 +47,10 @@ class PipeComponent extends PositionComponent
       ),
     );
 
+  static final random = Random();
+
   @override
   Future<void>? onLoad() {
-    var random = Random();
     gapHeight = random.nextDouble() * (_MAX_GAP_HEIGHT - _MIN_GAP_HEIGHT) +
         _MIN_GAP_HEIGHT;
     maxGapStartY = gameRef.size.y - gapHeight - 50;

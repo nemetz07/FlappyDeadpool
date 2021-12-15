@@ -1,8 +1,5 @@
 import 'package:flame/components.dart';
-import 'package:flame/effects.dart';
-import 'package:flame/game.dart';
 import 'package:flame/geometry.dart';
-import 'package:flame/input.dart';
 import 'package:flutter_hazi/components/pipe_component.dart';
 import 'package:flutter_hazi/game_runner.dart';
 import 'package:flutter_hazi/provider/navigation_service.dart';
@@ -75,11 +72,11 @@ class PlayerComponent extends SpriteAnimationComponent
       position.x = gameRef.size.x;
     }
 
-    if (speedY > 0) {
-      angle += 0.008;
-    } else {
-      angle = -0.2;
-    }
+    // if (speedY > 0) {
+    //   angle += 0.008;
+    // } else {
+    //   angle = -0.2;
+    // }
 
     speedY += 15;
     position.y += speedY * dt;

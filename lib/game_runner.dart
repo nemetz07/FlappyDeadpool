@@ -7,20 +7,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hazi/components/pipe_component.dart';
 import 'package:flutter_hazi/components/player_component.dart';
+import 'package:flutter_hazi/provider/navigation_service.dart';
+import 'package:flutter_hazi/provider/settings_state.dart';
+import 'package:provider/provider.dart';
 
 class GameRunner extends FlameGame
-    with TapDetector, HasCollidables, KeyboardEvents {
-  late PlayerComponent player;
+    with TapDetector, HasCollidables, KeyboardEvents, FPSCounter {
+  PlayerComponent player = PlayerComponent();
 
   int pipeFrames = 125;
 
   @override
   Future<void> onLoad() async {
-    // debugMode = true;
-    player = PlayerComponent();
-    var imageData = ParallaxImageData("background.png");
+    debugMode = Provider.of<SettingsState>(
+      NavigationService.navigatorKey.currentContext!,
+      listen: false,
+    ).isDebug;
     final parallax = await loadParallaxComponent(
-      [imageData],
+      [ParallaxImageData("background.png")],
       repeat: ImageRepeat.repeatX,
       baseVelocity: Vector2(75, 0),
     );
@@ -32,6 +36,7 @@ class GameRunner extends FlameGame
   @override
   void update(double dt) {
     super.update(dt);
+
     pipeFrames++;
     if (pipeFrames > 125) {
       add(PipeComponent());
@@ -50,6 +55,13 @@ class GameRunner extends FlameGame
   void onTapDown(TapDownInfo info) {
     player.jump();
     super.onTapDown(info);
+  }
+
+  @override
+  void renderTree(Canvas canvas) {
+    TextPaint textPaint = TextPaint();
+    super.renderTree(canvas);
+    textPaint.render(canvas, "FPS: ${fps()}", Vector2(0, 0));
   }
 
   @override

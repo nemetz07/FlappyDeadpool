@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hazi/provider/difficulty_state.dart';
+import 'package:flutter_hazi/provider/settings_state.dart';
+import 'package:flutter_hazi/ui/custom_outlined_button.dart';
 import 'package:provider/provider.dart';
 
 class Settings extends StatelessWidget {
-  Settings({Key? key}) : super(key: key);
-
-  // Difficulty difficulty = Difficulty.NORMAL;
+  const Settings({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,53 +15,84 @@ class Settings extends StatelessWidget {
         elevation: 0,
         backgroundColor: Colors.black12,
       ),
-      body: Material(
+      body: Theme(
+        data: ThemeData.dark(),
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ListTile(
+          child: Container(
+            width: 300,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const ListTile(
                   title: Text(
-                "Nehézség",
-                style: TextStyle(color: Colors.white),
-              )),
-              ListTile(
-                title:
-                    const Text('Könnyű', style: TextStyle(color: Colors.white)),
-                leading: Radio<Difficulty>(
-                  value: Difficulty.EASY,
-                  groupValue: context.watch<DifficultyState>().difficulty,
-                  onChanged: (Difficulty? value) {
-                    Provider.of<DifficultyState>(context, listen: false)
-                        .setDifficulty(Difficulty.EASY);
-                  },
+                    "Nehézség",
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-              ),
-              ListTile(
-                title:
-                    const Text('Normál', style: TextStyle(color: Colors.white)),
-                leading: Radio<Difficulty>(
-                  value: Difficulty.NORMAL,
-                  groupValue: context.watch<DifficultyState>().difficulty,
-                  onChanged: (Difficulty? value) {
-                    Provider.of<DifficultyState>(context, listen: false)
-                        .setDifficulty(Difficulty.NORMAL);
-                  },
+                ListTile(
+                  title: const Text('Könnyű',
+                      style: TextStyle(color: Colors.white)),
+                  leading: Radio<Difficulty>(
+                    value: Difficulty.easy,
+                    groupValue: context.watch<SettingsState>().difficulty,
+                    onChanged: (Difficulty? value) {
+                      Provider.of<SettingsState>(context, listen: false)
+                          .setDifficulty(Difficulty.easy);
+                    },
+                  ),
                 ),
-              ),
-              ListTile(
-                title:
-                    const Text('Nehéz', style: TextStyle(color: Colors.white)),
-                leading: Radio<Difficulty>(
-                  value: Difficulty.HARD,
-                  groupValue: context.watch<DifficultyState>().difficulty,
-                  onChanged: (Difficulty? value) {
-                    Provider.of<DifficultyState>(context, listen: false)
-                        .setDifficulty(Difficulty.HARD);
-                  },
+                ListTile(
+                  title: const Text('Normál',
+                      style: TextStyle(color: Colors.white)),
+                  leading: Radio<Difficulty>(
+                    value: Difficulty.normal,
+                    groupValue: context.watch<SettingsState>().difficulty,
+                    onChanged: (Difficulty? value) {
+                      Provider.of<SettingsState>(context, listen: false)
+                          .setDifficulty(Difficulty.normal);
+                    },
+                  ),
                 ),
-              ),
-            ],
+                ListTile(
+                  title: const Text('Nehéz',
+                      style: TextStyle(color: Colors.white)),
+                  leading: Radio<Difficulty>(
+                    value: Difficulty.hard,
+                    groupValue: context.watch<SettingsState>().difficulty,
+                    onChanged: (Difficulty? value) {
+                      Provider.of<SettingsState>(context, listen: false)
+                          .setDifficulty(Difficulty.hard);
+                    },
+                  ),
+                ),
+                const ListTile(
+                  title: Text(
+                    "Hibakeresés",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 15.0),
+                  child: Switch(
+                    value: context.watch<SettingsState>().isDebug,
+                    onChanged: (bool value) {
+                      Provider.of<SettingsState>(context, listen: false)
+                          .setDebugMode(value);
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 50,
+                ),
+                CustomOutlinedButton(
+                  "Kijelentkezés",
+                  onPressed: () {},
+                  minimumSize: const Size(250, 50),
+                  fontSize: 24,
+                )
+              ],
+            ),
           ),
         ),
       ),

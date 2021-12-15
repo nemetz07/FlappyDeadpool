@@ -1,9 +1,9 @@
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hazi/provider/difficulty_state.dart';
 import 'package:flutter_hazi/provider/navigation_service.dart';
 import 'package:flutter_hazi/provider/score_counter.dart';
+import 'package:flutter_hazi/provider/settings_state.dart';
 import 'package:flutter_hazi/screens/menu.dart';
 import 'package:flutter_hazi/screens/scores.dart';
 import 'package:flutter_hazi/screens/settings.dart';
@@ -20,7 +20,7 @@ main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => ScoreCounter()),
-        ChangeNotifierProvider(create: (_) => DifficultyState())
+        ChangeNotifierProvider(create: (_) => SettingsState())
       ],
       child: MaterialApp(
         navigatorKey: NavigationService.navigatorKey,
