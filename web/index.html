@@ -28,8 +28,26 @@
 
   <title>flutter_hazi</title>
   <link rel="manifest" href="manifest.json">
+  <meta name="google-signin-client_id" content="636764302936-rjt49aon9v4i577eh100rl20tcs45qt0.apps.googleusercontent.com">
 </head>
 <body>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+    <script>
+      var firebaseConfig = {
+        apiKey: "AIzaSyDg-Zwjcb8srmum5Rh_lYXdWaarJ1djoh4",
+        authDomain: "flappydeadpool.firebaseapp.com",
+        projectId: "flappydeadpool",
+        storageBucket: "flappydeadpool.appspot.com",
+        messagingSenderId: "636764302936",
+        appId: "1:636764302936:web:1b8add8264ac5cb577a42d"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->

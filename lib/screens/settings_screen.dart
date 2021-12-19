@@ -1,10 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hazi/provider/settings_state.dart';
 import 'package:flutter_hazi/ui/custom_outlined_button.dart';
 import 'package:provider/provider.dart';
 
-class Settings extends StatelessWidget {
-  const Settings({Key? key}) : super(key: key);
+class SettingsScreen extends StatelessWidget {
+  const SettingsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +88,10 @@ class Settings extends StatelessWidget {
                 ),
                 CustomOutlinedButton(
                   "Kijelentkezés",
-                  onPressed: () {},
+                  onPressed: () async {
+                    print('asdasdasd');
+                    await FirebaseAuth.instance.signOut();
+                  },
                   minimumSize: const Size(250, 50),
                   fontSize: 24,
                 )

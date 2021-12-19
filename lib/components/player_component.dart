@@ -4,6 +4,7 @@ import 'package:flutter_hazi/components/pipe_component.dart';
 import 'package:flutter_hazi/game_runner.dart';
 import 'package:flutter_hazi/provider/navigation_service.dart';
 import 'package:flutter_hazi/provider/score_counter.dart';
+import 'package:flutter_hazi/provider/settings_state.dart';
 import 'package:provider/provider.dart';
 
 class PlayerComponent extends SpriteAnimationComponent
@@ -62,14 +63,13 @@ class PlayerComponent extends SpriteAnimationComponent
   void update(double dt) {
     super.update(dt);
 
-    if (position.y > gameRef.size.y) {
-      position.y = 0;
-    }
-    if (position.x > gameRef.size.x) {
-      position.x = 0;
-    }
-    if (position.x < 0) {
-      position.x = gameRef.size.x;
+    if (Provider.of<SettingsState>(
+      NavigationService.navigatorKey.currentContext!,
+      listen: false,
+    ).isDebug) {
+      if (position.y > gameRef.size.y) {
+        position.y = 0;
+      }
     }
 
     // if (speedY > 0) {

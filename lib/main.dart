@@ -1,12 +1,14 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hazi/provider/navigation_service.dart';
 import 'package:flutter_hazi/provider/score_counter.dart';
 import 'package:flutter_hazi/provider/settings_state.dart';
-import 'package:flutter_hazi/screens/menu.dart';
-import 'package:flutter_hazi/screens/scores.dart';
-import 'package:flutter_hazi/screens/settings.dart';
+import 'package:flutter_hazi/screens/login_screen.dart';
+import 'package:flutter_hazi/screens/menu_screen.dart';
+import 'package:flutter_hazi/screens/scores_screen.dart';
+import 'package:flutter_hazi/screens/settings_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'game_runner.dart';
@@ -15,6 +17,8 @@ main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Flame.device.fullScreen();
   await Flame.device.setPortrait();
+
+  await Firebase.initializeApp();
 
   runApp(
     MultiProvider(
@@ -32,8 +36,9 @@ main() async {
             secondary: Colors.white,
           ),
         ),
-        home: const Menu(),
+        home: const MenuScreen(),
         routes: {
+          '/login': (context) => LoginScreen(),
           '/game': (context) {
             Provider.of<ScoreCounter>(context, listen: false).reset();
             return GameWidget(
@@ -63,8 +68,8 @@ main() async {
               initialActiveOverlays: const ['score'],
             );
           },
-          '/settings': (context) => Settings(),
-          '/scores': (context) => const Scores(),
+          '/settings': (context) => const SettingsScreen(),
+          '/scores': (context) => const ScoresScreen(),
         },
       ),
     ),
